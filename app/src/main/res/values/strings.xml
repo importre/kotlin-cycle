@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">kotlin-cycle</string>
+    <string name="hello_title">Hello Example</string>
+    <string name="bmi_title">BMI Example</string>
+    <string name="rest_title">REST Example</string>
+    <string name="type_your_name">Type your name</string>
+    <string name="lat_lng">lat,lng</string>
+</resources>

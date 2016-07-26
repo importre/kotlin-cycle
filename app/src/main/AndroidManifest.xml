@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.importre.kotlin.cycle.example">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".app.CycleApp"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".hello.HelloActivity"
+            android:label="@string/hello_title" />
+
+        <activity
+            android:name=".bmi.BmiActivity"
+            android:label="@string/bmi_title" />
+
+        <activity
+            android:name=".rest.UsersActivity"
+            android:label="@string/rest_title" />
+    </application>
+
+</manifest>

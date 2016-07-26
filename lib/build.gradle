@@ -1,0 +1,137 @@
+plugins {
+    id 'com.jfrog.bintray' version '1.7'
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'maven-publish'
+
+def _group = 'com.importre'
+def _artifact = 'kotlin-cycle'
+def _version = '0.1.4'
+def _githubUrl = 'https://github.com/importre/kotlin-cycle'
+
+group _group
+version _version
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "24.0.1"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName _version
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    libraryVariants.all { variant ->
+        def name = variant.buildType.name
+        if (name.equals("debug")) {
+            return
+        }
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.aar')) {
+                def fileName = "${_artifact}-${_version}.aar"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
+}
+
+dependencies {
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.7'
+
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    compile "com.android.support:appcompat-v7:$support_version"
+    compile "com.android.support:cardview-v7:$support_version"
+    compile "com.android.support:design:$support_version"
+    compile "com.android.support:recyclerview-v7:$support_version"
+
+    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7-kotlin:$rxbinding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-kotlin:$rxbinding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-support-v4-kotlin:$rxbinding_version"
+
+    testCompile 'junit:junit:4.12'
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
+
+repositories {
+    jcenter()
+}
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "source"
+}
+
+task javadocJar(type: Jar, dependsOn: 'dokka') {
+    classifier = 'javadoc'
+    from "$buildDir/dokka"
+}
+
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = 'javadoc'
+}
+
+artifacts {
+    archives sourceJar, javadocJar
+}
+
+publishing {
+    publications {
+        KotlinCyclePublish(MavenPublication) {
+            groupId _group
+            artifactId _artifact
+            version _version
+            artifact sourceJar
+            artifact javadocJar
+            artifact "$buildDir/outputs/aar/${_artifact}-${_version}.aar"
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty("user") ? project.user : ""
+    key = project.hasProperty("key") ? project.key : ""
+    publications = ['KotlinCyclePublish']
+    publish = true
+    // dryRun = true
+
+    pkg {
+        repo = 'maven'
+        name = _artifact
+        licenses = ['Apache-2.0']
+        vcsUrl = "${_githubUrl}.git"
+        publicDownloadNumbers = true
+
+        version {
+            name = _version
+            vcsTag = _version
+            gpg {
+                sign = true
+                passphrase = project.hasProperty("passphrase") ? project.passphrase : ""
+            }
+        }
+    }
+}
