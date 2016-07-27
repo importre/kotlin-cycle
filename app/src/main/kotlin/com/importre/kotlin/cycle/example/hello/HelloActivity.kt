@@ -17,7 +17,7 @@ class HelloActivity : BaseActivity() {
 
     private val main = { sources: Sources ->
         val change = sources.dom.select(R.id.helloEdit).textChanges().startWith("")
-        val model = change.map { name -> "Hello, $name!" }
+        val model = change.map(::greeting)
         val view = model.map { message -> onUpdateView(message) }
         Sinks(DomSink(view))
     }
