@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.importre.kotlin.cycle.example.bmi.BmiActivity
+import com.importre.kotlin.cycle.example.check.CheckActivity
 import com.importre.kotlin.cycle.example.hello.HelloActivity
 import com.importre.kotlin.cycle.example.rest.UsersActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         hello.setOnClickListener { show(HelloActivity::class) }
         bmi.setOnClickListener { show(BmiActivity::class) }
         rest.setOnClickListener { show(UsersActivity::class) }
+        check.setOnClickListener { show(CheckActivity::class) }
     }
 
     private fun show(kClass: KClass<out Activity>) {

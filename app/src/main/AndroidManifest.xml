@@ -30,6 +30,10 @@
         <activity
             android:name=".rest.UsersActivity"
             android:label="@string/rest_title" />
+
+        <activity
+            android:name=".check.CheckActivity"
+            android:label="@string/check_title" />
     </application>
 
 </manifest>
