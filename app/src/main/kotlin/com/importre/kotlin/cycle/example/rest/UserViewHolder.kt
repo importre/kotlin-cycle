@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.importre.kotlin.cycle.*
 import com.importre.kotlin.cycle.example.R
-import com.importre.kotlin.cycle.example.rest.ext.loadUrl
+import com.importre.kotlin.cycle.example.ext.loadUrl
 import com.importre.kotlin.cycle.example.rest.model.User
 import com.importre.kotlin.cycle.example.rest.util.ImageUtils
 import kotlinx.android.synthetic.main.layout_user_item.view.*

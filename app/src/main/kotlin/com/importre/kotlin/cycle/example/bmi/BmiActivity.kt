@@ -4,8 +4,10 @@ import android.os.Bundle
 import com.importre.kotlin.cycle.*
 import com.importre.kotlin.cycle.example.BaseActivity
 import com.importre.kotlin.cycle.example.R
+import com.importre.kotlin.cycle.example.ext.toast
 import kotlinx.android.synthetic.main.activity_bmi.*
 import rx.Observable
+import unwrap
 
 class BmiActivity : BaseActivity() {
 
@@ -65,8 +67,12 @@ class BmiActivity : BaseActivity() {
     }
 
     private fun onUpdateView(state: State) = {
-        weightText.text = "Weight: ${state.weight} kg"
-        heightText.text = "Height: ${state.height} cm"
-        bmiText.text = "Bmi: ${state.bmi}"
+        unwrap(weightText, heightText, bmiText) { w, h, b ->
+            w.text = "Weight: ${state.weight} kg"
+            h.text = "Height: ${state.height} cm"
+            b.text = "Bmi: ${state.bmi}"
+        } ?: run {
+            toast(R.string.error_undefined_views)
+        }
     }
 }

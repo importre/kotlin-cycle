@@ -1,4 +1,4 @@
-package com.importre.kotlin.cycle.example.rest.ext
+package com.importre.kotlin.cycle.example.ext
 
 import android.widget.ImageView
 import com.squareup.picasso.Picasso

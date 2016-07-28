@@ -6,4 +6,5 @@
     <string name="check_title">Check Example</string>
     <string name="type_your_name">Type your name</string>
     <string name="lat_lng">lat,lng</string>
+    <string name="error_undefined_views">Undefined Views</string>
 </resources>
