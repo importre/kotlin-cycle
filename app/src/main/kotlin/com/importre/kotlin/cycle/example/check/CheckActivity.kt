@@ -20,7 +20,7 @@ class CheckActivity : BaseActivity() {
                 .select(toggle.apply { isChecked = true })
                 .checkedChanges()
         val model = change
-                .map { onOff -> "안드로이드 개발자를 찾습니다: $onOff" }
+                .map { onOff -> "안드로이드 개발자를 모십니다: $onOff" }
                 .map { recruit -> "Riiid!\n$recruit" }
         val view = model.map { message -> onUpdateView(message) }
         Sinks(DomSink(view))
