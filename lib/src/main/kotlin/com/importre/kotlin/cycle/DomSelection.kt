@@ -3,10 +3,12 @@ package com.importre.kotlin.cycle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.util.Log
 import android.view.View
+import android.widget.CompoundButton
 import android.widget.SeekBar
 import android.widget.TextView
 import com.jakewharton.rxbinding.support.v4.widget.RxSwipeRefreshLayout
 import com.jakewharton.rxbinding.view.RxView
+import com.jakewharton.rxbinding.widget.RxCompoundButton
 import com.jakewharton.rxbinding.widget.RxSeekBar
 import com.jakewharton.rxbinding.widget.RxTextView
 import rx.Observable
@@ -64,6 +66,15 @@ class DomSelection(val view: View) {
         } catch (e: Exception) {
             Log.w(Cycle.name, e.toString())
             Observable.just(0)
+        }
+    }
+
+    fun checkedChanges(): Observable<Boolean> {
+        return try {
+            RxCompoundButton.checkedChanges(view as CompoundButton)
+        } catch (e: Exception) {
+            Log.w(Cycle.name, e.toString())
+            Observable.just(false)
         }
     }
 }
