@@ -1,16 +1,17 @@
 plugins {
     id 'com.jfrog.bintray' version '1.7'
+    id "com.github.dcendents.android-maven" version "1.4.1"
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'org.jetbrains.dokka'
-apply plugin: 'maven-publish'
 
 def _group = 'com.importre'
 def _artifact = 'kotlin-cycle'
-def _version = '0.1.6'
+def _version = '0.1.7'
 def _githubUrl = 'https://github.com/importre/kotlin-cycle'
+def _desc = 'Cycle in Android (written in Kotlin)'
 
 group _group
 version _version
@@ -39,20 +40,6 @@ android {
 
     lintOptions {
         abortOnError false
-    }
-
-    libraryVariants.all { variant ->
-        def name = variant.buildType.name
-        if (name.equals("debug")) {
-            return
-        }
-        variant.outputs.each { output ->
-            def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.endsWith('.aar')) {
-                def fileName = "${_artifact}-${_version}.aar"
-                output.outputFile = new File(outputFile.parent, fileName)
-            }
-        }
     }
 }
 
@@ -98,15 +85,40 @@ artifacts {
     archives sourceJar, javadocJar
 }
 
-publishing {
-    publications {
-        KotlinCyclePublish(MavenPublication) {
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name _artifact
+            description _desc
+            url _githubUrl
+            inceptionYear '2016'
+
+            packaging 'aar'
             groupId _group
             artifactId _artifact
             version _version
-            artifact sourceJar
-            artifact javadocJar
-            artifact "$buildDir/outputs/aar/${_artifact}-${_version}.aar"
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+
+            scm {
+                connection = "${_githubUrl}.git"
+                url _githubUrl
+
+            }
+
+            developers {
+                developer {
+                    name "Jaewe Heo"
+                    id "importre"
+                    email "jaeweheo@gmail.com"
+                }
+            }
         }
     }
 }
@@ -114,7 +126,7 @@ publishing {
 bintray {
     user = project.hasProperty("user") ? project.user : ""
     key = project.hasProperty("key") ? project.key : ""
-    publications = ['KotlinCyclePublish']
+    configurations = ['archives']
     publish = true
     // dryRun = true
 
@@ -128,9 +140,10 @@ bintray {
         version {
             name = _version
             vcsTag = _version
+            desc = _desc
+            vcsTag = _version
             gpg {
                 sign = true
-                passphrase = project.hasProperty("passphrase") ? project.passphrase : ""
             }
         }
     }

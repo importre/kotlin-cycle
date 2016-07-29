@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    compile project(':lib')
+    compile project(':kotlin-cycle')
     compile 'com.importre:kotlin-unwrap:0.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
 
