@@ -43,7 +43,7 @@ class UsersActivity : BaseActivity() {
         // Intent
         val usersStream = api.getUsers()
         val refreshStream = sources.dom
-                .select(R.id.refreshView)
+                .select(refreshView)
                 .refreshes()
                 .startWith(null as Void?)
         val changeStream = Observable

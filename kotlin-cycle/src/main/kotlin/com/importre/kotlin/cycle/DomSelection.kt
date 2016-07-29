@@ -13,7 +13,7 @@ import com.jakewharton.rxbinding.widget.RxSeekBar
 import com.jakewharton.rxbinding.widget.RxTextView
 import rx.Observable
 
-class DomSelection(val view: View) {
+open class DomSelection(val view: View) {
 
     fun clicks(): Observable<Void> {
         return RxView.clicks(view)

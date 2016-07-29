@@ -11,7 +11,7 @@ def _group = 'com.importre'
 def _artifact = 'kotlin-cycle'
 def _version = '0.1.7'
 def _githubUrl = 'https://github.com/importre/kotlin-cycle'
-def _desc = 'Cycle in Android (written in Kotlin)'
+def _desc = 'Cycle for Android (written in Kotlin)'
 
 group _group
 version _version

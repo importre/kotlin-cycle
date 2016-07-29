@@ -3,10 +3,9 @@ package com.importre.kotlin.cycle.example.rest
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.importre.kotlin.cycle.*
-import com.importre.kotlin.cycle.example.R
 import com.importre.kotlin.cycle.example.ext.loadUrl
+import com.importre.kotlin.cycle.example.ext.toast
 import com.importre.kotlin.cycle.example.rest.model.User
 import com.importre.kotlin.cycle.example.rest.util.ImageUtils
 import kotlinx.android.synthetic.main.layout_user_item.view.*
@@ -30,8 +29,8 @@ class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val main = { sources: Sources ->
             val dom = sources.dom
-            val emailChange_ = dom.select(R.id.emailButton).clicks().map { ButtonType.EMAIL }
-            val callChange_ = dom.select(R.id.callButton).clicks().map { ButtonType.CALL }
+            val emailChange_ = dom.select(itemView.emailButton).clicks().map { ButtonType.EMAIL }
+            val callChange_ = dom.select(itemView.callButton).clicks().map { ButtonType.CALL }
             val change_ = Observable.merge(emailChange_, callChange_)
             val view_ = change_.map { type -> show(user, type) }
             Sinks(DomSink(view_))
@@ -41,11 +40,10 @@ class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun show(user: User, type: ButtonType) = {
-        val message = when (type) {
+        toast(when (type) {
             ButtonType.EMAIL -> user.email
             ButtonType.CALL -> user.phone
-        }
-        Toast.makeText(itemView.context, message, Toast.LENGTH_SHORT).show()
+        })
     }
 }
 
