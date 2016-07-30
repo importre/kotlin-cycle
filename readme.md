@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.importre:kotlin-cycle:0.1.7'
+    compile 'com.importre:kotlin-cycle:<VERSION>'
 }
 ```
 
