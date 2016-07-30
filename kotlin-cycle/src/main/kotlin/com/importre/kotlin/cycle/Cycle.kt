@@ -7,6 +7,7 @@ object Cycle {
 
     val name = "kotlin-cycle"
 
+    @JvmStatic
     fun run(mainFun: (Sources) -> Sinks, vararg sources: Source) {
         val sourceList = sources.toList()
         val proxySinks = createProxySinks(sourceList)
