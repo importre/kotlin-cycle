@@ -3,7 +3,7 @@ package com.importre.kotlin.cycle
 import android.view.View
 import rx.Observable
 
-class DomSource(internal val driver: DomDriver) : Source("DOM") {
+class DomSource @JvmOverloads constructor(val driver: DomDriver = DomDriver()) : Source("DOM") {
 
     override fun imitate(stream: Observable<*>) {
         driver.imitate(stream)

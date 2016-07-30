@@ -1,9 +1,8 @@
 package com.importre.kotlin.cycle
 
-import android.view.ViewGroup
 import rx.Observable
 
-class DomDriver(internal val root: ViewGroup) : Driver("DOM") {
+class DomDriver() : Driver("DOM") {
 
     override fun imitate(stream: Observable<*>) {
         stream.subscribe({

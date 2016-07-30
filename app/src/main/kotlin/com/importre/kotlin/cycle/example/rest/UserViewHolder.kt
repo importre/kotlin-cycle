@@ -2,7 +2,6 @@ package com.importre.kotlin.cycle.example.rest
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.ViewGroup
 import com.importre.kotlin.cycle.*
 import com.importre.kotlin.cycle.example.ext.loadUrl
 import com.importre.kotlin.cycle.example.ext.toast
@@ -36,7 +35,7 @@ class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             Sinks(DomSink(view_))
         }
 
-        Cycle.run(main, DomSource(DomDriver(itemView as ViewGroup)))
+        Cycle.run(main, DomSource())
     }
 
     private fun show(user: User, type: ButtonType) = {

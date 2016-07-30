@@ -12,7 +12,7 @@ class CheckActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check)
 
-        Cycle.run(main, DomSource(DomDriver(root)))
+        Cycle.run(main, DomSource())
     }
 
     private val main = { sources: Sources ->

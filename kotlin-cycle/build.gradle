@@ -9,7 +9,7 @@ apply plugin: 'org.jetbrains.dokka'
 
 def _group = 'com.importre'
 def _artifact = 'kotlin-cycle'
-def _version = '0.1.9'
+def _version = '0.1.10'
 def _githubUrl = 'https://github.com/importre/kotlin-cycle'
 def _desc = 'Cycle for Android (written in Kotlin)'
 

@@ -26,7 +26,7 @@ class UsersActivity : BaseActivity() {
         inject()
         initView()
 
-        Cycle.run(main, DomSource(DomDriver(root)))
+        Cycle.run(main, DomSource())
     }
 
     private fun inject() {

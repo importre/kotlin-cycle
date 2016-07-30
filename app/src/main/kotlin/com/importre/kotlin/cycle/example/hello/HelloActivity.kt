@@ -12,7 +12,7 @@ class HelloActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
 
-        Cycle.run(main, DomSource(DomDriver(root)))
+        Cycle.run(main, DomSource())
     }
 
     private val main = { sources: Sources ->
