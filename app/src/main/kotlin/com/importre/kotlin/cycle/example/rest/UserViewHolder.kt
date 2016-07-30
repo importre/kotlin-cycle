@@ -28,7 +28,7 @@ class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         itemView.nameText.text = user.name
 
         val main = { sources: Sources ->
-            val dom = sources.dom
+            val dom = sources.dom()
             val emailChange_ = dom.select(itemView.emailButton).clicks().map { ButtonType.EMAIL }
             val callChange_ = dom.select(itemView.callButton).clicks().map { ButtonType.CALL }
             val change_ = Observable.merge(emailChange_, callChange_)

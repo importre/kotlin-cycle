@@ -1,6 +1,5 @@
 package com.importre.kotlin.cycle
 
-import rx.android.schedulers.AndroidSchedulers
 import rx.subjects.ReplaySubject
 import java.util.*
 
@@ -14,7 +13,7 @@ object Cycle {
         val sinks = mainFun.invoke(Sources(sourceList))
         sinks.forEach { sink ->
             val proxy = proxySinks[sink.name]
-            sink.stream.observeOn(AndroidSchedulers.mainThread()).subscribe({
+            sink.stream.subscribe({
                 proxy?.onNext(it)
             }, {
                 sink.error?.invoke(it)

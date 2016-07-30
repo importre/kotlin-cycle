@@ -42,7 +42,7 @@ class UsersActivity : BaseActivity() {
     private val main = { sources: Sources ->
         // Intent
         val usersStream = api.getUsers()
-        val refreshStream = sources.dom
+        val refreshStream = sources.dom()
                 .select(refreshView)
                 .refreshes()
                 .startWith(null as Void?)

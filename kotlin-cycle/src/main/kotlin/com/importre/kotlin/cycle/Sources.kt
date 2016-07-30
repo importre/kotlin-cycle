@@ -10,5 +10,5 @@ class Sources(sourceList: List<Source>) : HashMap<String, Source>() {
         })
     }
 
-    val dom: DomSource = get("DOM") as DomSource
+    fun dom(): DomSource = get("DOM") as DomSource
 }

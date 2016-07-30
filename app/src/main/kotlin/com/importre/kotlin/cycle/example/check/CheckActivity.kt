@@ -16,7 +16,7 @@ class CheckActivity : BaseActivity() {
     }
 
     private val main = { sources: Sources ->
-        val change = sources.dom
+        val change = sources.dom()
                 .select(toggle.apply { isChecked = true })
                 .checkedChanges()
         val model = change

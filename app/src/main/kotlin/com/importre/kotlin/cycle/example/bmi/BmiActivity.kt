@@ -19,7 +19,7 @@ class BmiActivity : BaseActivity() {
     }
 
     private val main = { sources: Sources ->
-        val dom = sources.dom
+        val dom = sources.dom()
         val weightProps = Observable.just(Props(min = 40, max = 140, value = 70))
         val heightProps = Observable.just(Props(min = 140, max = 210, value = 170))
 
