@@ -67,7 +67,7 @@ class BmiActivity : BaseActivity() {
             w.text = "Weight: ${state.weight} kg"
             h.text = "Height: ${state.height} cm"
             b.text = "Bmi: ${state.bmi}"
-        } ?: run {
+        } nah {
             toast(R.string.error_undefined_views)
         }
     }
