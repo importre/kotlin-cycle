@@ -29,5 +29,4 @@ class MainActivity : AppCompatActivity() {
     private fun show(kClass: KClass<out Activity>) {
         startActivity(Intent(this, kClass.java))
     }
-
 }
