@@ -11,11 +11,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.importre.kotlin.cycle.example.MainActivity">
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/hello"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="hello" />
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/hello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hello" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/helloCyc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hello cycle" />
+    </LinearLayout>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/bmi"

@@ -24,6 +24,10 @@
             android:label="@string/hello_title" />
 
         <activity
+            android:name=".hello.HelloCycleActivity"
+            android:label="@string/hello_title" />
+
+        <activity
             android:name=".bmi.BmiActivity"
             android:label="@string/bmi_title" />
 

@@ -8,5 +8,8 @@ import android.widget.Toast
 fun Activity.toast(@StringRes id: Int)
         = Toast.makeText(this, id, Toast.LENGTH_SHORT).show()
 
+fun Activity.toast(message: String)
+        = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
 fun RecyclerView.ViewHolder.toast(message: String)
         = Toast.makeText(itemView.context, message, Toast.LENGTH_SHORT).show()

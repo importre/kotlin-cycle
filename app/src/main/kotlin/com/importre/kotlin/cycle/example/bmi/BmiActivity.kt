@@ -1,7 +1,8 @@
 package com.importre.kotlin.cycle.example.bmi
 
 import android.os.Bundle
-import com.importre.kotlin.cycle.*
+import com.importre.kotlin.cycle.DomSource
+import com.importre.kotlin.cycle.cycle
 import com.importre.kotlin.cycle.example.BaseActivity
 import com.importre.kotlin.cycle.example.R
 import com.importre.kotlin.cycle.example.ext.toast
@@ -15,24 +16,19 @@ class BmiActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bmi)
 
-        Cycle.run(main, DomSource())
-    }
+        cycle {
+            val weightProps = Observable.just(Props(min = 40, max = 140, value = 70))
+            val heightProps = Observable.just(Props(min = 140, max = 210, value = 170))
 
-    private val main = { sources: Sources ->
-        val dom = sources.dom()
-        val weightProps = Observable.just(Props(min = 40, max = 140, value = 70))
-        val heightProps = Observable.just(Props(min = 140, max = 210, value = 170))
+            // Intent
+            val (weightStream, heightStream) = intent(dom, heightProps, weightProps)
 
-        // Intent
-        val (weightChangeStream, heightChangeStream) = intent(dom, heightProps, weightProps)
+            // Model
+            val stateStream = model(weightStream, heightStream, weightProps, heightProps)
 
-        // Model
-        val stateStream = model(weightChangeStream, heightChangeStream, weightProps, heightProps)
-
-        // View
-        val viewStream = stateStream.map { state -> onUpdateView(state) }
-
-        Sinks(DomSink(viewStream))
+            // View
+            stateStream.map { state -> onUpdateView(state) }
+        }
     }
 
     private val intent = { dom: DomSource,

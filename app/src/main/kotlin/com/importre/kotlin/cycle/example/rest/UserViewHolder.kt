@@ -2,7 +2,7 @@ package com.importre.kotlin.cycle.example.rest
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.importre.kotlin.cycle.*
+import com.importre.kotlin.cycle.cycle
 import com.importre.kotlin.cycle.example.ext.loadUrl
 import com.importre.kotlin.cycle.example.ext.toast
 import com.importre.kotlin.cycle.example.rest.model.User
@@ -26,16 +26,12 @@ class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         itemView.locationImage.loadUrl(url)
         itemView.nameText.text = user.name
 
-        val main = { sources: Sources ->
-            val dom = sources.dom()
-            val emailChange_ = dom.select(itemView.emailButton).clicks().map { ButtonType.EMAIL }
-            val callChange_ = dom.select(itemView.callButton).clicks().map { ButtonType.CALL }
-            val change_ = Observable.merge(emailChange_, callChange_)
-            val view_ = change_.map { type -> show(user, type) }
-            Sinks(DomSink(view_))
+        cycle {
+            val emailChange = dom.select(itemView.emailButton).clicks().map { ButtonType.EMAIL }
+            val callChange = dom.select(itemView.callButton).clicks().map { ButtonType.CALL }
+            val change = Observable.merge(emailChange, callChange)
+            change.map { type -> show(user, type) }
         }
-
-        Cycle.run(main, DomSource())
     }
 
     private fun show(user: User, type: ButtonType) = {

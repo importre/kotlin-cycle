@@ -2,11 +2,11 @@ package com.importre.kotlin.cycle.example.rest
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
-import com.importre.kotlin.cycle.*
+import com.importre.kotlin.cycle.cycle
 import com.importre.kotlin.cycle.example.BaseActivity
 import com.importre.kotlin.cycle.example.R
 import com.importre.kotlin.cycle.example.app.CycleApp
+import com.importre.kotlin.cycle.example.ext.toast
 import com.importre.kotlin.cycle.example.rest.api.JsonPlaceholder
 import com.importre.kotlin.cycle.example.rest.model.User
 import kotlinx.android.synthetic.main.activity_users.*
@@ -26,7 +26,25 @@ class UsersActivity : BaseActivity() {
         inject()
         initView()
 
-        Cycle.run(main, DomSource())
+        cycle {
+            error = onError
+
+            // Intent
+            val usersStream = api.getUsers()
+            val refreshStream = dom
+                    .select(refreshView)
+                    .refreshes()
+                    .startWith(null as Void?)
+
+            // Model
+            val modelStream = Observable
+                    .combineLatest(usersStream, refreshStream) { users, refresh ->
+                        users
+                    }
+
+            // View
+            modelStream.map { users -> onUpdateView(users) }
+        }
     }
 
     private fun inject() {
@@ -39,27 +57,8 @@ class UsersActivity : BaseActivity() {
         userListView.adapter = adapter
     }
 
-    private val main = { sources: Sources ->
-        // Intent
-        val usersStream = api.getUsers()
-        val refreshStream = sources.dom()
-                .select(refreshView)
-                .refreshes()
-                .startWith(null as Void?)
-        val changeStream = Observable
-                .combineLatest(usersStream, refreshStream) { users, refresh -> users }
-
-        // Model
-        val modelStream = changeStream
-
-        // View
-        val viewStream = modelStream.map { users -> onUpdateView(users) }
-
-        Sinks(DomSink(viewStream, onError))
-    }
-
     private val onError = { error: Throwable ->
-        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
+        error.message?.let { toast(it) }
     }
 
     private fun onUpdateView(users: List<User>) = {
