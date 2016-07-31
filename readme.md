@@ -23,24 +23,17 @@ dependencies {
 ## Example
 
 ```kotlin
-class HelloActivity : BaseActivity() {
+class HelloCycleActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
 
-        Cycle.run(main, DomSource())
-    }
-
-    private val main = { sources: Sources ->
-        val change = sources.dom().select(helloEdit).textChanges()
-        val model = change.map(::greeting)
-        val view = model.map { message -> onUpdateView(message) }
-        Sinks(DomSink(view))
-    }
-
-    private fun onUpdateView(message: CharSequence) = {
-        helloText.text = message
+        cycle {
+            val change = dom.select(helloEdit).textChanges()
+            val model = change.map(::greeting)
+            model.map { message -> { helloText.text = message } }
+        }
     }
 }
 ```
